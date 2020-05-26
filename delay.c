@@ -1,3 +1,11 @@
+/*
+ *
+ * Copyright (c) 2020 iAchieved.it, LLC.
+ * Copyright (c) 2019 SiFive, Inc.
+ * 
+ * The MIT License
+*/
+
 #include <stdio.h>
 #include <metal/cpu.h>
 
@@ -7,6 +15,9 @@ struct metal_cpu* cpu;
 struct metal_interrupt* cpu_intr, *tmr_intr;
 int tmr_id;
 volatile uint32_t timer_isr_flag;
+static unsigned bootstrapped = 0;
+
+int bootstrap(void);
 
 // ISR - Interrupt Service Routine
 void timer_isr(int id, void* data) {
@@ -18,7 +29,15 @@ void timer_isr(int id, void* data) {
   timer_isr_flag = 1;
 }
 
+/*
+ *
+ * delay for a bit, not guaranteed to be accurate
+ * 
+ */
 void delay(unsigned seconds) {
+
+  if (!bootstrapped) bootstrap();
+
   // Clear global timer ISR flag
   timer_isr_flag = 0;
 
@@ -34,6 +53,11 @@ void delay(unsigned seconds) {
   timer_isr_flag = 0;
 }
 
+/*
+ *  
+ * set things up for handling interrupts
+ * 
+ */
 int bootstrap(void) {
 
     int rc;
@@ -51,7 +75,6 @@ int bootstrap(void) {
     }
     metal_interrupt_init(cpu_intr);
 
-    // Setup Timer and its interrupt so we can toggle LEDs on 1s cadence
     tmr_intr = metal_cpu_timer_interrupt_controller(cpu);
     if (tmr_intr == NULL) {
         printf("TIMER interrupt controller is  null.\n");

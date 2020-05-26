@@ -24,9 +24,13 @@
 #define METAL_GPIO_20 20
 #define METAL_GPIO_21 21
 #define METAL_GPIO_22 22
+#define METAL_GPIO_23 23
 
 #define RED_LED   METAL_GPIO_22
 #define GREEN_LED METAL_GPIO_19 
 #define BLUE_LED  METAL_GPIO_21
+
+// A thought as to how to write this
+#define DIG_PIN_7   METAL_GPIO_23
 
 #endif
