@@ -1,3 +1,12 @@
+/*
+ *
+ * Copyright (c) 2020 iAchieved.it, LLC.
+ * Copyright (c) 2019 SiFive, Inc.
+ * 
+ * The MIT License
+ * 
+*/
+
 #ifndef __gpios_h__
 #define __gpios_h__
 
@@ -31,6 +40,8 @@
 #define BLUE_LED  METAL_GPIO_21
 
 // A thought as to how to write this
-#define DIG_PIN_7   METAL_GPIO_23
+#define DIG_PIN_2 METAL_GPIO_18
+#define DIG_PIN_4 METAL_GPIO_20
+#define DIG_PIN_7 METAL_GPIO_23
 
 #endif
